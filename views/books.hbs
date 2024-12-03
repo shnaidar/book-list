@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books List</title>
+  <style>
+    /* Styles for the page */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    a {
+      display: inline-block;
+      margin-bottom: 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    td img {
+      max-width: 50px;
+      border-radius: 4px;
+    }
+
+    td {
+      vertical-align: middle;
+    }
+
+    td.no-cover {
+      text-align: center;
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .delete-button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .delete-button:hover {
+      background-color: #e53935;
+    }
+  </style>
+</head>
+<body>
+  <h1>Books List</h1>
+  <a href="/add-book">Add a New Book</a>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Category</th>
+          <th>Pages</th>
+          <th>Cover</th>
+          <th>Actions</th> <!-- New column for actions -->
+        </tr>
+      </thead>
+      <tbody>
+        {{#each books}}
+        <tr>
+          <td>{{this.titre}}</td>
+          <td>{{this.auteur}}</td>
+          <td>{{this.categorie}}</td>
+          <td>{{this.pages}}</td>
+          <td>
+            {{#if this.photo}}
+            <img src="{{this.photo}}" alt="{{this.titre}}" width="50">
+            {{else}}
+            No cover
+            {{/if}}
+          </td>
+          <td>
+            <!-- Delete Button Form -->
+            <form action="/delete-book" method="POST" style="display:inline;">
+              <input type="hidden" name="titre" value="{{this.titre}}">
+              <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
